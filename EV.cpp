@@ -12,6 +12,7 @@
 #include <ctype.h>
 #include <math.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdarg.h>
 
 using namespace nCL;
@@ -25,6 +26,7 @@ int main(int argc, char const** argv)
     bool show_hex = false;
     bool show_int = false;
     bool show_uint = false;
+    int precision = 17;
 
     while (argc > 0 && argv[0][0] == '-' && isalpha(argv[0][1]))
     {
@@ -44,6 +46,14 @@ int main(int argc, char const** argv)
         case 'u':
             show_uint = true;
             break;
+        case 'p':
+            if (argc > 0)
+            {
+                precision = atoi(argv[0]);
+                argc--;
+                argv++;
+            }
+            break;
         default:
             printf("unknown option: %s\n", option);
             return -1;
@@ -58,6 +68,7 @@ int main(int argc, char const** argv)
             "  -i     Show result as a 32-bit integer\n"
             "  -u     Show result as an unsigned 32-bit integer\n"
             "  -x     Show result as hex\n"
+            "  -p <n> Set output precision\n"
             "Example:\n"
             "  %s \"1 + 2 * 3\"\n"
             , command, command);
@@ -93,7 +104,7 @@ int main(int argc, char const** argv)
         double x = EvalExpressionDouble(argv[0], &error);
 
         if (!error)
-            printf("%g\n", x);
+            printf("%0.*g\n", precision, x);
     }
 
     if (error)
