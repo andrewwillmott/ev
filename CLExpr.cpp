@@ -3,7 +3,7 @@
 //
 //  Function:   Basic expression evaluator
 //
-//  Author(s):  Andrew Willmott
+//  Copyright:  Andrew Willmott
 //
 
 #include "CLExpr.h"
@@ -142,6 +142,11 @@ uint32_t nCL::EvalExpressionUInt32(const char* s, cEvalError* error)
     return uint32_t(result);
 }
 
+nCL::cEvalError::cEvalError() :
+    mMessage(0),
+    mBegin  (0),
+    mEnd    (0)
+{}
 
 bool nCL::ReportError(const cEvalError& error)
 {
@@ -308,8 +313,13 @@ namespace
             if (Token(s0, s1, "sqrt"))     return sqrt(EvalParentheses(context));
             if (Token(s0, s1, "exp"))      return exp (EvalParentheses(context));
             if (Token(s0, s1, "log"))      return log (EvalParentheses(context));
+            if (Token(s0, s1, "erf"))      return erf (EvalParentheses(context));
+
             if (Token(s0, s1, "abs"))      return fabs(EvalParentheses(context));
-    
+            if (Token(s0, s1, "floor"))    return floor(EvalParentheses(context));
+            if (Token(s0, s1, "ceil"))     return ceil (EvalParentheses(context));
+            if (Token(s0, s1, "round"))    return round(EvalParentheses(context));
+
             if (Token(s0, s1, "sin"))      return sin (EvalParentheses(context));
             if (Token(s0, s1, "cos"))      return cos (EvalParentheses(context));
             if (Token(s0, s1, "tan"))      return tan (EvalParentheses(context));
@@ -324,9 +334,6 @@ namespace
             if (Token(s0, s1, "dasin"))    return DegreesFromRadians(asin(EvalParentheses(context)));
             if (Token(s0, s1, "dacos"))    return DegreesFromRadians(acos(EvalParentheses(context)));
             if (Token(s0, s1, "datan"))    return DegreesFromRadians(atan(EvalParentheses(context)));
-    
-            if (Token(s0, s1, "floor"))    return floor(EvalParentheses(context));
-            if (Token(s0, s1, "ceil"))     return ceil (EvalParentheses(context));
     
             if (Token(s0, s1, "sqr"))
             {
@@ -391,7 +398,7 @@ namespace
         double result;
         if (context->s[0] == '0' && context->s[1] == 'x') // have to handle hex numbers differently.
         {
-            uint32_t resultx = strtoul(context->s, &endS, 0);
+            uint32_t resultx = (uint32_t) strtoul(context->s, &endS, 0);
             result = resultx;
         }
         else

@@ -3,9 +3,7 @@
 //
 //  Function:   Basic expression evaluator
 //
-//  Author(s):  Andrew Willmott
-//
-//  Copyright:  1998-2015
+//  Copyright:  Andrew Willmott
 //
 
 #ifndef CL_EXPRESSION_H
@@ -27,14 +25,16 @@ namespace nCL
     // Error control
     struct cEvalError
     {
-        const char* mMessage = 0;    //!< String indicating error
-        const char* mBegin   = 0;    //!< Start of error location
-        const char* mEnd     = 0;    //!< end of error location, may be equal to mStart if we only have a cursor rather than a range
+        cEvalError();
+
+        const char* mMessage;    // String indicating error
+        const char* mBegin  ;    // Start of error location
+        const char* mEnd    ;    // end of error location, may be equal to mStart if we only have a cursor rather than a range
         
         operator bool() const { return mMessage != 0; }
     };
 
-    bool ReportError(const cEvalError& error);  //!< Prints error to standard error stream. Meant as a simple example. Returns true if there was an error.
+    bool ReportError(const cEvalError& error);  // Prints error to standard error stream. Meant as a simple example. Returns true if there was an error.
 }
 
 

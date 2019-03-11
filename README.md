@@ -7,34 +7,49 @@ To build and run:
 
     c++ CLExpr.cpp EV.cpp -o ev && ./ev
 
-Help:
+Or add those files to your favourite IDE.
+
+
+Usage:
 
     ev [options] <expression>
       Evaluate the given expression.
-    Options:
-      -i     Show result as a 32-bit integer
-      -u     Show result as an unsigned 32-bit integer
-      -x     Show result as hex
-      -p <n> Set output precision
+
+Options:
+
+    -i     Show result as a 32-bit integer
+    -u     Show result as an unsigned 32-bit integer
+    -x     Show result as hex
+    -p <n> Set output precision
 
 Examples:
 
     ev "1 + 2 + 3 * 4 / sin(5.678)"
     ev -x "3735928559"
-    ev -x "3735928559"
     ev -p 3 "1/3"
 
-Supports:
+Operators:
+
+    + -   * / %   ^
+
+Constants:
 
     pi
     e
+
+Functions:
 
     sqrt(x)
     sqr(x)
     exp(x)
     pow(y, x)
     log(x)
+    erf(x)
+
     abs(x)
+    floor(x)
+    ceil(x)
+    round(x)
 
     sin(radians)
     cos(radians)
@@ -53,6 +68,3 @@ Supports:
     dacos(x)
     datan(x)
     datan2(y, x)
-
-    floor(x)
-    ceil(x)
